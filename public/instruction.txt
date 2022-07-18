@@ -1,0 +1,23 @@
+Admin panel=>api base
+
+main table=>
+Product table
+order table
+sitesetting
+user table
+shipping table
+
+
+step=>
+repo reate kora
+admin mastering
+product table create/migration file
+seeder create
+->all table as per civ
+->product controller
+->resource crued
+->prduct admin view
+->search option
+->
+
+
