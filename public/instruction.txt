@@ -9,12 +9,12 @@ shipping table
 
 
 step=>
-repo reate kora
-admin mastering
-product table create/migration file
-seeder create
+repo reate kora=>ok
+admin mastering=>ok
+product table create/migration file=>ok
+seeder create=>ok
 ->all table as per civ
-->product controller
+->product controller=>ok
 ->resource crued
 ->prduct admin view
 ->search option
