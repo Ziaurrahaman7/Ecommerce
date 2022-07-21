@@ -12,6 +12,7 @@ step=>
 repo reate kora=>ok
 admin mastering=>ok
 product table create/migration file=>ok
+name,feather_image,price,
 seeder create=>ok
 ->all table as per civ
 ->product controller=>ok

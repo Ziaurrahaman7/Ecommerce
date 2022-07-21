@@ -1,0 +1,1 @@
+<div class="d-grid"><button type="submit" class="btn btn-primary btn-block">{{$slot}}</button></div>
