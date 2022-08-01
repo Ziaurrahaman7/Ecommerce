@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class CategorieController extends Controller
 {
@@ -15,12 +16,7 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        // return response()->view('admin.category.index', compact('categories'), 200)->json([
-        //     'status'=>200,
-        //     'message'=>'successfully fetch data',
-        //     'data'=>$categories
-        // ]);
+        $categories = Category::with('parent')->get();
         return view('admin.category.index',compact('categories'));
     }
 
@@ -45,6 +41,8 @@ class CategorieController extends Controller
     {
         $data = $request->validate([
             'title'=>'required',
+            'parent_id'=>'nullable',
+            'status'=>'required'
         ]);
         Category::create($data);
         return redirect('admin/category')->with('success', 'successfully created');
@@ -67,9 +65,10 @@ class CategorieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        $parentCat = Category::whereNull('parent_id')->get();
+        return view('admin.category.edit',compact('category','parentCat'));
     }
 
     /**
@@ -79,9 +78,16 @@ class CategorieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $data = $request->validate([
+            'title'=>'required',
+            'status'=>'required',
+            'parent_id'=>'nullable'
+
+        ]);
+        $category->update($data);
+        return redirect('admin/category')->with('success', 'successfully updated'); 
     }
 
     /**
@@ -90,8 +96,9 @@ class CategorieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect('admin/category')->with('success', 'successfully Deleted'); 
     }
 }

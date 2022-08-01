@@ -4,7 +4,6 @@
     <input class="form-control" 
         type="{{$type}}"
          name="{{$name}}" 
-          id="{{$name}}"
           {{$attributes(['value'=>old($name)])}}
           />
           <x-form.eror name="{{$name}}"/>

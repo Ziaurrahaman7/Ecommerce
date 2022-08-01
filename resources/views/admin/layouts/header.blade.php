@@ -19,5 +19,6 @@
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
+  <link href="{{ asset('vendor/file-manager/css/file-manager.css') }}" rel="stylesheet">
   <link id="pagestyle" href="{{asset('admin/assets/')}}/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
 </head>

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Spatie\FlareClient\Http\Client;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategorieController;
+use App\Http\Controllers\Admin\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +25,6 @@ Route::get('/dashboard', function () {
     return view('admin/dashboard');
 })->middleware(['auth'])->name('dashboard');
 Route::Resource('admin/category', CategorieController::class)->middleware(['auth']);
+Route::Resource('admin/product', ProductController::class)->middleware(['auth']);
 
 require __DIR__.'/auth.php';

@@ -372,6 +372,35 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{asset('admin/assets/')}}/js/material-dashboard.min.js?v=3.0.4"></script>
+  <script>
+    /* Encode string to slug */
+function convertToSlug( str ) {
+	
+    //replace all special characters | symbols with a space
+    str = str.replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ').toLowerCase();
+      
+    // trim spaces at start and end of string
+    str = str.replace(/^\s+|\s+$/gm,'');
+      
+    // replace space with dash/hyphen
+    str = str.replace(/\s+/g, '-');	
+    // document.getElementById("slug-text").innerHTML= str;
+    document.getElementById("inputslug").value= str;
+    //return str;
+  }
+</script>
+    <!-- File manager -->
+    <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('fm-main-block').setAttribute('style', 'height:' + window.innerHeight + 'px');
+  
+        fm.$store.commit('fm/setFileCallBack', function(fileUrl) {
+          window.opener.fmSetLink(fileUrl);
+          window.close();
+        });
+      });
+    </script>
 </body>
 
 </html>

@@ -22,3 +22,5 @@ seeder create=>ok
 ->
 
 
+product table
+name, price, quantity, discount, feather_image, category name, shipping address, autority, description,
