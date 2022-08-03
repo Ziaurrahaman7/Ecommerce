@@ -9,18 +9,15 @@
             <div class="input-group input-group-outline mt-3">
                 <label for="">Feather Image</label>
             </div>
-            <div class="col-md-12" id="fm-main-block">
-                <div id="fm"></div>
-            </div>
             <div class="input-group input-group-outline">
-                <input type="file" class="form-control" name="feather_image">
+                <input type="file" class="form-control" multiple name="image[]">
             </div>
-            <div class="input-group input-group-outline mt-3">
+            {{-- <div class="input-group input-group-outline mt-3">
                 <label for="">Related Image</label>
             </div>
             <div class="input-group input-group-outline">
-                <input type="file" class="form-control" name="related_img">
-            </div>
+                <input type="file" class="form-control" multiple  name="related_img[]">
+            </div> --}}
             <x-form.input name="sku"/>
             <x-form.input type="number" name="price"/>
             <x-form.input type="number" name="discount"/>

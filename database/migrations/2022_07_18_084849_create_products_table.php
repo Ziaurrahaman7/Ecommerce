@@ -25,8 +25,6 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->bigInteger('shiping_cost')->nullable();
             $table->longText('shiping_address')->nullable();
-            $table->string('feather_image');
-            $table->string('related_img')->nullable();
             $table->bigInteger('stock')->nullable();
             $table->tinyInteger('visibility')->default('1');
             $table->tinyInteger('is_promoted')->default('0');

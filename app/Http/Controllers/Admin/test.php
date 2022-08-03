@@ -20,7 +20,7 @@ class ProductController extends Controller
     {
         $products = Product::with('productImage')->get();
         // dd($products);
-        return view('admin.product.index', compact('products'));
+       return view('admin.product.index', compact('products'));
     }
 
     /**
@@ -41,57 +41,55 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request['user_id'] = Auth::id();
+        $request['user_id']= Auth::id();
         $data = $request->validate([
-            'title' => 'required',
-            'slug' => 'required|unique:products',
-            'sku' => 'required',
-            'category_id' => 'required',
-            'user_id' => 'required',
-            'price' => 'required',
-            'discount' => 'nullable',
-            'description' => 'nullable',
-            'shiping_cost' => 'nullable',
-            'shiping_address' => 'nullable',
-            'stock' => 'nullable',
-            'visibility' => 'nullable',
-            'is_promoted' => 'nullable',
-            'promote_start_date' => 'nullable',
-            'promote_end_date' => 'nullable',
+            'title'=>'required',
+            'slug'=>'required|unique:products',
+            'sku'=>'required',
+            'category_id'=>'required',
+            'user_id'=>'required',
+            'price'=>'required',
+            'discount'=>'nullable',
+            'description'=>'nullable',
+            'shiping_cost'=>'nullable',
+            'shiping_address'=>'nullable',
+            'stock'=>'nullable',
+            'visibility'=>'nullable',
+            'is_promoted'=>'nullable',
+            'promote_start_date'=>'nullable',
+            'promote_end_date'=>'nullable',
         ]);
-        $data['user_id'] = Auth::id();
-        $ft = Product::create($data);
-        // dd($request->file('image'));
-       $fg = $request->file('image');
-       $fg->hashName()
-        dd($fg);
-    $ft->ProductImage()->createMany([
-        ['image' => 'A new comment.'],
-        ['image' => 'Another new comment.'],
-    ]);
-    // dd($ft);
+        $data['user_id']= Auth::id();
+       $ft = Product::create($data);
+    //    dd($ft->id);
+        $productId = $ft['id'];
 
-        // dd($dh);
-        // $request->validate([
-        //     $request->file('image')
-        // ]);
+        $request->validate([
+            'image' => 'required',
+            'image.*' => 'mimes:jpg,png,jpeg,gif,svg',
+            ]);
+            if($request->hasfile('image'))
+         {
+           
+        foreach($request->file('image') as $key => $file)
+            {
+                $request['product_id']=$productId;
+                $path = $file->store('public/uploads');
+                // $name = $file->getClientOriginalName();
+                $name = $file->hashName();
+                $insert[$key]['image'] = $name;
+                $insert[$key]['product_id'] = $request['product_id']; 
 
-        // if ($request->hasfile('image')) {
-        //     foreach ($request->file('image') as $key => $file) {
-        //         // $request['product_id'] = $productId;
-        //         $path = $file->store('public/uploads');
-        //         // $name = $file->getClientOriginalName();
-        //         $name = $file->hashName();
-        //         // $insert[$key]['image'] = $name;
-        //         // $insert[$key]['product_id'] = $ft->id;
+                $insert = [
+                    'image' => $name,
+                    'product_id' => $request['product_id'],
+                ];
 
-        //         // $datas['image'][$key] = $name;
-        //     }
-        //     // dd($datas);
-        //     $ft->productImage()->createMany($name);
-        //     // $ft->productImage()->create($datas);
-        //     // dd($datas);
-        // }
+                ProductImage::create($insert);
+            }
+        //   dd($rp);
+       
+        }
         return redirect('admin/product')->with('success', 'successfully inserted');
     }
 
@@ -115,7 +113,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $parentCat = Category::all();
-        return view('admin.product.edit', compact('product', 'parentCat'));
+        return view('admin.product.edit', compact('product','parentCat'));
     }
 
     /**
@@ -127,28 +125,28 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $request['user_id'] = Auth::id();
+        $request['user_id']= Auth::id();
         $data = $request->validate([
-            'title' => 'required',
-            'slug' => 'required|unique:products',
-            'sku' => 'required',
-            'category_id' => 'required',
-            'user_id' => 'required',
-            'price' => 'required',
-            'discount' => 'nullable',
-            'description' => 'nullable',
-            'shiping_cost' => 'nullable',
-            'shiping_address' => 'nullable',
+            'title'=>'required',
+            'slug'=>'required|unique:products',
+            'sku'=>'required',
+            'category_id'=>'required',
+            'user_id'=>'required',
+            'price'=>'required',
+            'discount'=>'nullable',
+            'description'=>'nullable',
+            'shiping_cost'=>'nullable',
+            'shiping_address'=>'nullable',
             // 'feather_image'=>'required|max:3000|image',
             // 'related_img'=>'nullable|max:3000|image',
-            'stock' => 'nullable',
-            'visibility' => 'nullable',
-            'is_promoted' => 'nullable',
-            'promote_start_date' => 'nullable',
-            'promote_end_date' => 'nullable',
+            'stock'=>'nullable',
+            'visibility'=>'nullable',
+            'is_promoted'=>'nullable',
+            'promote_start_date'=>'nullable',
+            'promote_end_date'=>'nullable',
         ]);
         // dd($data);
-        $data['user_id'] = Auth::id();
+        $data['user_id']= Auth::id();
         $file = $request->file('feather_image');
         $name = $file->hashName();
         request()->file('feather_image')->store('public/uploads');
@@ -158,7 +156,7 @@ class ProductController extends Controller
         $rname = $rfile->hashName();
         request()->file('related_img')->store('public/uploads');
         $data['related_img'] = $rname;
-
+       
         $product->update($data);
         return redirect('admin/product')->with('success', 'successfully edit');
     }

@@ -11,6 +11,9 @@ class Product extends Model
 
     protected $fillable = [
         'title','sku','slug','category_id','user_id','price','discount','description','
-        shiping_cost','shiping_address','feather_image','related_img','stock','visibility','is_promoted','promote_start_date','promote_end_date'
+        shiping_cost','shiping_address','stock','visibility','is_promoted','promote_start_date','promote_end_date'
     ];
+   public function productImage(){
+    return $this->hasMany(ProductImage::class, 'product_id');
+   }
 }
