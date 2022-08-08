@@ -19,7 +19,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('productImage')->get();
-        // dd($products);
+        // dd(($products->toArray()));
         return view('admin.product.index', compact('products'));
     }
 
@@ -61,37 +61,12 @@ class ProductController extends Controller
         ]);
         $data['user_id'] = Auth::id();
         $ft = Product::create($data);
-        // dd($request->file('image'));
-       $fg = $request->file('image');
-       $fg->hashName()
-        dd($fg);
-    $ft->ProductImage()->createMany([
-        ['image' => 'A new comment.'],
-        ['image' => 'Another new comment.'],
-    ]);
-    // dd($ft);
-
-        // dd($dh);
-        // $request->validate([
-        //     $request->file('image')
-        // ]);
-
-        // if ($request->hasfile('image')) {
-        //     foreach ($request->file('image') as $key => $file) {
-        //         // $request['product_id'] = $productId;
-        //         $path = $file->store('public/uploads');
-        //         // $name = $file->getClientOriginalName();
-        //         $name = $file->hashName();
-        //         // $insert[$key]['image'] = $name;
-        //         // $insert[$key]['product_id'] = $ft->id;
-
-        //         // $datas['image'][$key] = $name;
-        //     }
-        //     // dd($datas);
-        //     $ft->productImage()->createMany($name);
-        //     // $ft->productImage()->create($datas);
-        //     // dd($datas);
-        // }
+        foreach ($request->file('image') as $key => $file) {
+            $path = $file->store('public/uploads');
+            $name = $file->hashName();
+            $datas[] = ['image' => $name];
+        }
+        $ft->ProductImage()->createMany($datas);
         return redirect('admin/product')->with('success', 'successfully inserted');
     }
 
@@ -130,7 +105,7 @@ class ProductController extends Controller
         $request['user_id'] = Auth::id();
         $data = $request->validate([
             'title' => 'required',
-            'slug' => 'required|unique:products',
+            'slug' => 'required',
             'sku' => 'required',
             'category_id' => 'required',
             'user_id' => 'required',
@@ -138,29 +113,31 @@ class ProductController extends Controller
             'discount' => 'nullable',
             'description' => 'nullable',
             'shiping_cost' => 'nullable',
+            'feather_image' => 'image|max:3000',
             'shiping_address' => 'nullable',
-            // 'feather_image'=>'required|max:3000|image',
-            // 'related_img'=>'nullable|max:3000|image',
             'stock' => 'nullable',
             'visibility' => 'nullable',
             'is_promoted' => 'nullable',
             'promote_start_date' => 'nullable',
             'promote_end_date' => 'nullable',
         ]);
-        // dd($data);
         $data['user_id'] = Auth::id();
-        $file = $request->file('feather_image');
-        $name = $file->hashName();
-        request()->file('feather_image')->store('public/uploads');
-        $data['feather_image'] = $name;
-        // ---------------
-        $rfile = $request->file('related_img');
-        $rname = $rfile->hashName();
-        request()->file('related_img')->store('public/uploads');
-        $data['related_img'] = $rname;
+        $ft = $product->update($data);
+        // $datas['image']= $request->file('image');
+        if ($request->file('image')) {
+            // dd($request->file('image'));
+            // $key[]="";
+            foreach ($request->file('image') as $key => $file) {
 
-        $product->update($data);
-        return redirect('admin/product')->with('success', 'successfully edit');
+                $path = $file->store('public/uploads');
+                $name = $file->hashName();
+                $datas[] = ['image' => $name];
+            }
+            $product->ProductImage()->delete();
+            $product->ProductImage()->createMany($datas);
+        }
+
+        return redirect('admin/product')->with('success', 'successfully inserted');
     }
 
     /**

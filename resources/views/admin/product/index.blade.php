@@ -22,12 +22,17 @@
                   </tr>
                 </thead>
                 <tbody>
+                    
                     @foreach ($products as  $product)
                     <tr>
+                      
                         <td class="text-center">{{Ucwords($product->title)}}</td>
                         <td class="text-center">{{$product->price}}</td>
                         <td class="text-center">{{$product->category_id}}</td>
-                        <td class="text-center">{{$product->feather_image}}</td>
+                        <td class="text-center">
+                         @foreach ($product->productImage as $file) 
+                           <img src="{{url('/storage/uploads')}}/{{$file->image}}" style="width:50px;height:50px;"> 
+                         @endforeach</td>
                         <td class="text-center">{{$product->quantity}}</td>
                         <td class="text-center">{{$product->discount}}</td>
                         <td class="text-center">{{$product->Visibility}}</td>

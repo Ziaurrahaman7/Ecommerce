@@ -23,14 +23,14 @@
             <x-form.input type="number" name="discount"/>
             <x-form.input name="stock"/>
             <div class="input-group input-group-outline">
-            <label>Select Category</label>
-                </div>
-                <div class="input-group input-group-outline">
-                    <select name="category_id"  class="form-select form-control">
-                        <option value="1">cat 1</option>
-                        <option value="1">cat 2</option>
-                    </select>
-                </div>
+                <label>Select Category</label>
+            </div>
+            <div class="input-group input-group-outline">
+                <select name="category_id"  class="form-select form-control">
+                    <option value="1">cat 1</option>
+                    <option value="1">cat 2</option>
+                </select>
+            </div>
                 <div class="input-group input-group-outline mt-3">
                 <label>Shiping Address</label>
                 </div>
@@ -42,7 +42,7 @@
                     <label>visibility</label>
                 </div>
                 <div class="input-group input-group-outline">
-                    <select name="category_id"  class="form-select form-control">
+                    <select name="visibility"  class="form-select form-control">
                         <option value="1">On</option>
                         <option value="0">Off</option>
                     </select>
