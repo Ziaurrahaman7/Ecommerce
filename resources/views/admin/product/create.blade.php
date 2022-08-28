@@ -27,8 +27,9 @@
             </div>
             <div class="input-group input-group-outline">
                 <select name="category_id"  class="form-select form-control">
-                    <option value="1">cat 1</option>
-                    <option value="1">cat 2</option>
+                    @foreach ($categories as $category)
+                    <option value="{{$category->id}}">{{$category->title}}</option>
+                    @endforeach
                 </select>
             </div>
                 <div class="input-group input-group-outline mt-3">

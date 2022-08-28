@@ -30,7 +30,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.product.create');
+        $categories = Category::all();
+        return view('admin.product.create', compact('categories'));
     }
 
     /**
@@ -128,7 +129,6 @@ class ProductController extends Controller
             // dd($request->file('image'));
             // $key[]="";
             foreach ($request->file('image') as $key => $file) {
-
                 $path = $file->store('public/uploads');
                 $name = $file->hashName();
                 $datas[] = ['image' => $name];
@@ -137,7 +137,7 @@ class ProductController extends Controller
             $product->ProductImage()->createMany($datas);
         }
 
-        return redirect('admin/product')->with('success', 'successfully inserted');
+        return redirect('admin/product')->with('success', 'successfully updated');
     }
 
     /**
@@ -146,8 +146,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        // $product->ProductImage()->delete();
+        return redirect('admin/product')->with('success', 'successfully deleted');
     }
 }
