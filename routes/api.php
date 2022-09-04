@@ -28,3 +28,6 @@ Route::middleware('auth:sanctum')->get('/test', function () {
 Route::get('apiproduct', [ProductController::class, 'index']);
 Route::get('apicategory', [ProductController::class, 'category']);
 Route::post('register', [UserController::class, 'register']);
+Route::post('login', [UserController::class, 'login']);
+Route::get('product/{id}', [ProductController::class, 'product']);
+Route::get('related/{id}', [ProductController::class, 'relatetdProduct']);
